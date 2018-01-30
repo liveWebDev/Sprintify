@@ -1,0 +1,62 @@
+
+<?php $__env->startSection('globalStyles'); ?>
+<?php echo HTML::style('assets/css/jquery.datatables.css'); ?>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('pageContainer'); ?>  
+  <div class="mainpanel">
+  
+    <!-- headerbar -->
+    <?php $__env->startSection('headerbar'); ?>
+      <?php echo $__env->make('student.student_nav', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+    <?php $__env->stopSection(); ?>
+    
+    <div class="contentpanel school-panel">
+      
+      <div class="row">
+        <?php if ($last == null): ?>
+          <!-- <div class="last-no-play">
+            No Last Card
+          </div> -->
+        <?php else: ?>
+          <div class="last-play">
+            <?php echo Form::open(array('url' => 'student_resume', 'id' => 'form', 'method' => 'post', 'autocomplete' => 'off')); ?> 
+              <input type="hidden" id="id" name="id" value="<?php echo $sprint->id; ?>">
+              <input type="hidden" id="school" name="school" value="<?php echo $last->school; ?>">
+              <input type="hidden" id="last_id" name="last_id" value="<?php echo $last_id; ?>">
+              <a>Continue <?php echo $sprint->name; ?></a>
+            <?php echo Form::close(); ?>
+          </div>
+        <?php endif; ?>
+      </div><!-- row -->
+    </div><!-- contentpanel -->
+  </div><!-- mainpanel -->  
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('pageLevelPlugins'); ?>
+<?php echo HTML::script('assets/js/retina.min.js'); ?>
+<?php echo HTML::script('assets/js/jquery.cookies.js'); ?>
+
+<?php echo HTML::script('assets/js/jquery.sparkline.min.js'); ?>
+<?php echo HTML::script('assets/js/toggles.min.js'); ?>
+<?php echo HTML::script('assets/js/custom.js'); ?>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('javaScript'); ?>
+
+<script>
+jQuery(document).ready(function() { 
+	$( '#mainbody' ).addClass('horizontal-menu');
+
+  $('.last-play').click(function() {
+    $(this).find('a').click();
+  });
+
+  $('.last-play a').click(function() {
+    $('#form').submit();
+  });
+});
+</script>
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.default', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

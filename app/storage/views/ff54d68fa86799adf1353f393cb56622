@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="shortcut icon" href="assets/images/favicon.png" type="image/png">
+
+  <title><?php echo Config::get('app.title'); ?></title>
+	
+  <?php echo HTML::style('assets/css/style.default.css'); ?> 
+  <?php echo HTML::style('assets/bootstrap-modal/css/bootstrap-modal-bs3patch.css'); ?>
+  <?php echo HTML::style('assets/bootstrap-modal/css/bootstrap-modal.css'); ?>
+	<?php echo $__env->yieldContent('globalStyles'); ?>
+  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+   <?php echo HTML::script('assets/js/html5shiv.js'); ?>
+   <?php echo HTML::script('assets/js/respond.min.js'); ?>
+  <![endif]-->
+</head>
+
+<body id="mainbody" class="oldtemplate">
+
+<!-- Preloader -->
+<div id="preloader">
+    <div id="status"><i class="fa fa-spinner fa-spin"></i></div>
+</div>
+<section>
+
+<?php echo $__env->yieldContent('headerbar'); ?>
+<!-- BEGIN CONTAINER -->
+<?php echo $__env->yieldContent('pageContainer'); ?>
+<!-- END CONTAINER -->
+</section>
+<!-- BEGIN CORE PLUGINS -->
+<?php echo HTML::script('assets/js/jquery-1.10.2.min.js'); ?>
+<?php echo HTML::script('assets/js/jquery-migrate-1.2.1.min.js'); ?>
+<?php echo HTML::script('assets/js/jquery-ui-1.10.3.min.js'); ?>
+<?php echo HTML::script('assets/js/bootstrap.min.js'); ?>
+
+<?php echo HTML::script('assets/js/modernizr.min.js'); ?>
+<?php echo HTML::script('assets/js/jquery.sparkline.min.js'); ?>
+<?php echo HTML::script('assets/js/toggles.min.js'); ?>
+<?php echo HTML::script('assets/js/retina.min.js'); ?>
+<?php echo HTML::script('assets/js/jquery.cookies.js'); ?>
+
+
+<?php echo HTML::script('assets/js/jquery.autogrow-textarea.js'); ?>
+<?php echo HTML::script('assets/js/jquery.maskedinput.min.js'); ?>
+<?php echo HTML::script('assets/js/jquery.tagsinput.min.js'); ?>
+<?php echo HTML::script('assets/js/chosen.jquery.min.js'); ?>
+<?php echo HTML::script('assets/bootstrap-modal/js/bootstrap-modalmanager.js'); ?>
+<?php echo HTML::script('assets/bootstrap-modal/js/bootstrap-modal.js'); ?>
+<?php echo HTML::script('assets/js/ui-extended-modals.js'); ?>
+<?php echo HTML::script('assets/js/jquery.fileupload.js'); ?>
+<?php echo HTML::script('assets/js/jquery.validate.min.js'); ?>
+<?php echo HTML::script('assets/js/additional-methods.min.js'); ?>
+<?php echo HTML::script('assets/js/app.js'); ?>
+<?php echo HTML::script('assets/js/custom.js'); ?>
+
+<!-- END CORE PLUGINS -->
+
+<!-- BEGIN PAGE LEVEL PLUGINS -->
+<?php echo $__env->yieldContent('pageLevelPlugins'); ?>
+<!-- END PAGE LEVEL PLUGINS -->
+<!-- BEGIN PAGE LEVEL SCRIPTS -->
+<?php echo $__env->yieldContent('pageLevelScripts'); ?>
+<!-- END PAGE LEVEL SCRIPTS -->
+
+<!-- BEGIN JAVASCRIPTS -->
+<?php echo $__env->yieldContent('javaScript'); ?>
+<!-- END JAVASCRIPTS -->
+</body>
+</html>

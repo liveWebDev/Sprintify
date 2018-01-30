@@ -1,0 +1,96 @@
+
+<?php $__env->startSection('globalStyles'); ?>
+<?php echo HTML::style('assets/css/jquery.datatables.css'); ?>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('pageContainer'); ?>  
+  <div class="mainpanel">
+    <!-- headerbar -->
+    <?php $__env->startSection('headerbar'); ?>
+      <?php echo $__env->make('student.student_nav', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+    <?php $__env->stopSection(); ?>
+    <!-- headerbar -->
+    <div class="contentpanel">      
+      <div class="row">
+        <div class="contentlist col-md-9">
+          <?php if ($break == ""): ?>
+          <div class="table-responsive col-md-12">
+            <table class="table card-table quiz-result">
+              <tbody>
+                <tr>
+                  <td>Sprint Title</td>
+                  <td><?php echo $title; ?></td>
+                </tr>
+                <tr>
+                  <td>Date</td>
+                  <td><?php echo date('m-d'); ?></td>
+                </tr>
+                <tr>
+                  <td>Correct Cards</td>
+                  <td><?php echo $correct; ?></td>
+                </tr>
+                <tr>
+                  <td>Incorrect Cards</td>
+                  <td><?php echo $incorrect; ?></td>
+                </tr>
+                <tr>
+                  <td>Fluency Rate</td>
+                  <td><?php echo $speed; ?></td>
+                </tr>
+                <tr>
+                  <td>Target Fluency Rate</td>
+                  <td><?php echo $target; ?></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <?php else: ?>
+          <div class="last-play">
+            <span class="fa fa-check-square-o"></span><br />
+            <span class="label">Great Job!</span><br /><br />
+            <span><?php echo $correct; ?> correct in <?php echo $interval; ?> seconds</span><br /><br />
+            <span>
+              This is <?php echo date('m-d'); ?>&nbsp;|&nbsp;
+              "<?php echo $course; ?>" Course&nbsp;|&nbsp;
+              "<?php echo $title; ?>" Sprint
+            </span><br /><br />
+            <a>Continue</a>
+          </div>
+          <?php endif; ?>
+          <?php echo Form::open(array('url' => 'student_resume', 'id' => 'form', 'method' => 'post')); ?>
+            <input type="hidden" name="school" value="<?php echo $school; ?>" />
+            <input type="hidden" name="id" value="<?php echo $sprint_id; ?>" />
+            <input type="hidden" name="last_id" value="<?php echo $last_id; ?>" />
+          <?php echo Form::close(); ?>
+        </div>
+      </div><!-- row -->       
+    </div><!-- contentpanel -->    
+  </div><!-- mainpanel -->  
+  
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('pageLevelPlugins'); ?>
+<?php echo HTML::script('assets/js/retina.min.js'); ?>
+<?php echo HTML::script('assets/js/jquery.cookies.js'); ?>
+
+<?php echo HTML::script('assets/js/jquery.sparkline.min.js'); ?>
+<?php echo HTML::script('assets/js/toggles.min.js'); ?>
+<?php echo HTML::script('assets/js/jquery.datatables.min.js'); ?>
+
+<?php echo HTML::script('assets/js/custom.js'); ?>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('javaScript'); ?>
+
+<script>
+jQuery(document).ready(function() {     
+  $( '#mainbody' ).addClass('horizontal-menu');
+
+  $('.last-play a').click(function() {
+    $('#form').submit();
+  });
+});
+</script>
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.default', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

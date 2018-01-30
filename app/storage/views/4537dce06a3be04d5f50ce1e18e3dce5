@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
+<!--[if !IE]><!--> <html lang="en"> <!--<![endif]-->
+<!-- BEGIN HEAD -->
+<head>
+    <meta charset="utf-8" />
+    <title><?php echo Config::get('app.title'); ?></title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta content="" name="description" />
+    <meta content="" name="author" />
+
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+	<?php echo HTML::style('assets/css/style.default.css'); ?>	
+	<?php echo $__env->yieldContent('globalStyles'); ?>
+	<!-- END GLOBAL MANDATORY STYLES -->
+
+	<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>    
+    <?php echo HTML::script('assets/js/html5shiv.js'); ?>
+    <?php echo HTML::script('assets/js/respond.min.js'); ?>
+    <![endif]-->
+   	<link rel="shortcut icon" href="<?php echo URL::to('favicon.ico'); ?>">   	
+</head>
+<!-- END HEAD -->
+<!-- BEGIN BODY -->
+<?php $__env->startSection('body'); ?>
+<body class="page-header-fixed page-full-width">
+
+<div id="preloader">
+    <div id="status"><i class="fa fa-spinner fa-spin"></i></div>
+</div>
+<section>
+	<div class="leftpanel">
+		<div class="logopanel">
+        	<h1><span>[</span> <?php echo Config::get('app.title'); ?> <span>]</span></h1>
+    	</div><!-- logopanel -->
+    	<div class="leftpanelinner">
+			<?php $__env->startSection('nav'); ?>
+				<?php echo $__env->make('admin.admin_nav', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+			<?php echo $__env->yieldSection(); ?>
+		</div>
+	</div>
+	<div class="mainpanel">
+		<?php $__env->startSection('admin-header'); ?>
+			<?php echo $__env->make('admin.header', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+		<?php echo $__env->yieldSection(); ?>
+		<?php echo $__env->yieldContent('pageContainer'); ?>
+	</div>
+
+</section>
+<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
+	<!-- BEGIN CORE PLUGINS -->
+	<!--[if lt IE 9]>
+	   <?php echo HTML::script('assets/plugins/respond.min.js'); ?>
+	   <?php echo HTML::script('assets/plugins/excanvas.min.js'); ?>
+	<![endif]-->
+	
+	<?php echo HTML::script('assets/js/jquery-1.10.2.min.js'); ?>
+	<?php echo HTML::script('assets/js/jquery-migrate-1.2.1.min.js'); ?>
+	<?php echo HTML::script('assets/js/jquery-ui-1.10.3.min.js'); ?>
+	<?php echo HTML::script('assets/js/bootstrap.min.js'); ?>
+	<?php echo HTML::script('assets/js/retina.min.js'); ?>
+	<!-- END CORE PLUGINS -->
+	<!-- BEGIN PAGE LEVEL PLUGINS -->
+
+	<?php echo HTML::script('assets/js/morris.min.js'); ?>
+	<?php echo HTML::script('assets/js/raphael-2.1.0.min.js'); ?>
+	<?php echo HTML::script('assets/js/jquery.datatables.min.js'); ?>
+	<?php echo HTML::script('assets/js/chosen.jquery.min.js'); ?>
+	<?php echo HTML::script('assets/js/custom.js'); ?>
+	
+	<?php echo HTML::script('assets/js/jquery.sparkline.min.js'); ?>
+	<?php echo HTML::script('assets/js/jquery.cookies.js'); ?>
+	<?php echo HTML::script('assets/bootstrap-modal/js/bootstrap-modalmanager.js'); ?>
+	<?php echo HTML::script('assets/bootstrap-modal/js/bootstrap-modal.js'); ?>
+	<?php echo HTML::script('assets/js/ui-extended-modals.js'); ?>
+	<?php echo HTML::script('assets/js/jquery.fileupload.js'); ?>
+	<?php echo HTML::script('assets/js/jquery.validate.min.js'); ?>
+
+	<?php echo HTML::script('assets/js/toggles.min.js'); ?>
+	<?php echo HTML::script('assets/js/jquery.validate.min.js'); ?>
+	<?php echo HTML::script('assets/js/additional-methods.min.js'); ?>
+	<?php echo HTML::script('assets/js/app.js'); ?>
+
+	<?php echo $__env->yieldContent('pageLevelPlugins'); ?>
+	<!-- END PAGE LEVEL PLUGINS -->
+	<!-- BEGIN PAGE LEVEL SCRIPTS -->
+	<?php echo $__env->yieldContent('pageLevelScripts'); ?>
+	<!-- END PAGE LEVEL SCRIPTS -->
+	<?php echo $__env->yieldContent('javaScript'); ?>
+	<!-- END JAVASCRIPTS -->
+</body>
+<!-- END BODY -->
+</html>

@@ -1,0 +1,138 @@
+
+<?php $__env->startSection('globalStyles'); ?>
+<?php echo HTML::style('assets/css/jquery.datatables.css'); ?>
+<?php echo HTML::style('assets/css/jquery.tagsinput.css'); ?>
+
+<!-- BEGIN CONFIRM DIALOG -->
+<?php echo HTML::style('assets/css/styles.css'); ?>
+<?php echo HTML::style('assets/js/jquery.confirm/jquery.confirm.css'); ?>
+<!-- END CONFIRM DIALOG -->
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('pageContainer'); ?>
+<div class="pageheader">
+  <h2><i class="fa fa-th-list"></i> Sprint <span>All sprints</span></h2>
+  <div class="breadcrumb-wrapper">
+    <span class="label">You are here:</span>
+    <ol class="breadcrumb">
+      <li><a href="<?php echo URL::route('admin/dashboard'); ?>"><?php echo Config::get('app.title'); ?></a></li>
+      <li class="active">All sprints</li>
+    </ol>
+  </div>
+</div>
+<div class="contentpanel">
+	<div class="row">
+	  <?php echo Form::open(array('url' => 'sprint/delete', 'method' => 'post', 'class' => 'form', 'id' => 'sprintForm', 'autocomplete' => 'off')); ?> 
+	  <input type="hidden" name="id" id="id">
+      <div class="table-responsive">
+          <table class="table" id="class_table2">
+              <thead>
+                 <tr>
+                    <th>Course</th>
+                    <th>Name</th>
+                    <th>Fluency rate</th>                    
+                    <th>Cards</th>
+                    <th></th>
+                 </tr>
+              </thead>
+              <tbody>
+                <?php foreach ($sprints as $sprint): ?>
+                 <tr class="odd gradeX">
+                    <td><?php echo $sprint->coursename; ?></td>
+                    <td>
+                    	<input type="hidden" id="course_<?php echo $sprint->id; ?>" value="<?php echo $sprint->courseid; ?>">
+	                    <a style="cursor:pointer;" class="list-group-dishes-item sprint-edit" data-key="<?php echo $sprint->id; ?>">
+	                    <?php echo $sprint->name; ?>
+	                    </a>
+					</td>
+                    <td><?php echo $sprint->fluency_rate; ?></td>
+                    <td>
+                    	<?php if (count(explode(',', $sprint->cards)) > 1): ?>
+                    		<?php echo count(explode(',', $sprint->cards)); ?>
+                    	<?php elseif (count(explode(',', $sprint->cards)) == 1): ?>
+                    		<?php $cards = explode(',', $sprint->cards);?>
+                    		<?php if ($cards[0] == ""): ?>
+                    			No Cards
+                    		<?php else: ?>
+                    			<?php echo count(explode(',', $sprint->cards)); ?>
+                    		<?php endif; ?>
+                    	<?php else: ?>
+                    		No Cards
+                    	<?php endif; ?>
+                    </td>
+                    <td class="table-action">
+                      <a style="cursor:pointer;" class="sprint-edit" data-key="<?php echo $sprint->id; ?>"><i class="fa fa-pencil"></i></a>
+                      <a href="#" onclick="doDelete('<?php echo $sprint->id; ?>')" class="delete-row<?php echo $sprint->id; ?>"><i class="fa fa-trash-o"></i></a>
+                    </td>
+                 </tr>
+                <?php endforeach; ?>                 
+              </tbody>
+          </table>
+      </div>
+	 <?php echo Form::close(); ?>
+	 <?php echo Form::open(array('url' => 'admin_sprintEdit', 'method' => 'post', 'id' => 'sprintEditForm')); ?> 
+	    <input type="hidden" id="sprint" name="sprint">
+	    <input type="hidden" name="course" id="course_id">
+	 <?php echo Form::close(); ?>	 
+  </div>      
+</div>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('pageLevelPlugins'); ?>
+<!-- BEGIN CONFIRM DIALOG -->
+<?php echo HTML::script('assets/js/jquery.form.min.js'); ?>
+<?php echo HTML::script('assets/js/jquery.confirm/jquery.confirm.js'); ?>
+<?php echo HTML::script('assets/js/script.js'); ?>
+<!-- END CONFIRM DIALOG -->
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('javaScript'); ?>
+<script>
+	$( '.sprint-edit' ).on('click', function(event) {
+		var data_key = $(this).attr('data-key');
+		jQuery('#sprint').val(data_key);
+		jQuery('#course_id').val($('#course_' + data_key).val());		
+		$('#sprintEditForm').submit();
+	});
+
+	// Delete row in a table
+	var options = {
+		success:	showResponse,
+		dataType:	'json' 
+	};	
+
+	function showResponse(response, statusText, xhr, $form)  {
+		if (response.status == true) {
+			$row = jQuery('.delete-row' + response.idx);
+			
+			$row.closest('tr').fadeOut(function(){
+				$row.remove();
+			});
+		} else {
+			alert(response.message);
+		}
+	}
+
+	function doDelete(id) {
+		$.confirm({
+			'title'		: 'Delete Confirmation',
+			'message'	: 'Do you really want to delete selected sprint?',
+			'buttons'	: {
+				'Yes'	: {
+					'class'	: 'blue',
+					'action': function(){		
+						jQuery('#id').val(id);
+						$( '#sprintForm' ).ajaxForm(options).submit();						
+					}
+				},
+				'No'	: {
+					'class'	: 'gray',
+					'action': function(){}	// Nothing to do in this case. You can as well omit the action property.
+				}
+			}
+		});	
+	}
+</script>
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.admin_default', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
